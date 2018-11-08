@@ -1,5 +1,5 @@
 CC = g++
-FLAGS = -ggdb -Wall -Werror -std=c++17 -fsanitize=address -fno-omit-frame-pointer
+FLAGS = -ggdb -Wall -Werror -std=c++17 -fno-omit-frame-pointer
 FILES = Source.cpp Relation.cpp
 H_FILES = Relation.h
 

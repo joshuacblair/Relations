@@ -1,27 +1,43 @@
 #ifndef RELATION_H
 #define RELATION_H
 
-#include<tuple>
+#include<utility>
 #include<map>
 #include<string>
 #include<vector>
+#include<iostream>
+#include<sstream>
+
+enum varType {CONSTANT, VARIABLE};
+enum varStatus {LOCKED, UNLOCKED};
+
+typedef	std::vector<std::string> ROW;	
+typedef std::vector<ROW> TABLE;
+
+struct queryData {
+	std::string data;
+	int column;
+	varType type;
+	varStatus status;
+};
 
 class Relation {
 	private:
 		std::string name;
-		std::vector<std::string> headers;
-	   	typedef	std::vector<std::string> ROW;	
-		std::vector<ROW> table;
+		ROW headers;
+		TABLE table;
 	public:
 		Relation();
 		~Relation();
 
-		void buildRelation(std::string, std::vector<std::string>);
-		void insertRow(std::vector<std::string>);
+		void buildRelation(std::string&, ROW&);
+		void insertRow(ROW&);
 
-		std::vector<int> select(std::vector<std::string>);
-		void project();
-		void rename();
+		std::vector<queryData> select(ROW&);
+		TABLE project(std::vector<queryData>&);
+		void rename(ROW&);
+		void resolveQuery(ROW&);
+		std::string toString(TABLE&);
 };
 
 #endif //RELATION_H

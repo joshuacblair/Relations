@@ -37,7 +37,7 @@ class Relation {
 		TABLE project(std::vector<queryData>&);
 		void rename(ROW&);
 		void resolveQuery(ROW&);
-		std::string toString(TABLE&);
+		std::string toString(TABLE&, std::vector<queryData>&);
 };
 
 #endif //RELATION_H

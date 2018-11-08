@@ -92,11 +92,11 @@ void Relation::resolveQuery(ROW &currQuery) {
 	
 	rename(currQuery);
 
-	std::cout << toString(projectTable);
+	std::cout << toString(projectTable, processedQuery);
 	return; 
 }
 
-std::string Relation::toString(TABLE &results) {
+std::string Relation::toString(TABLE &results, std::vector<queryData> &processedQuery) {
 	std::ostringstream os;
 	os << name << "(";
 	for (size_t i = 0; i < headers.size() - 1; ++i) {
@@ -105,9 +105,24 @@ std::string Relation::toString(TABLE &results) {
 	os << headers.at(headers.size() - 1) << ")? ";
 	if (results.size() > 0) {
 		os << "Yes(" << results.size() << ")" << std::endl;
+		for (size_t i = 0; i < results.size(); i++) {
+			os << "  ";
+			for (size_t j = 0; j < processedQuery.size() - 1; j++) {
+				if (processedQuery.at(j).status == UNLOCKED) {
+					os << headers.at(j) << "=" << results.at(i).at(j) << ", ";
+				}
+			}
+			if (processedQuery.at(processedQuery.size() - 1).status == UNLOCKED) {
+				os << headers.at(headers.size() - 1) << "=" << results.at(i).at(headers.size() - 1) << std::endl;
+			}
+		}
+
 	}
 	else {
 		os << "No" << std::endl;
 	}
+
+	
+
 	return os.str();
 }	

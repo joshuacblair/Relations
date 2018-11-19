@@ -26,6 +26,7 @@ class Relation {
 		std::string name;
 		ROW headers;
 		TABLE table;
+		int numUnlocked;
 	public:
 		Relation();
 		~Relation();
@@ -34,6 +35,9 @@ class Relation {
 		void insertRow(ROW&);
 
 		std::vector<queryData> select(ROW&);
+		TABLE buildProject(std::vector<queryData>&);
+		bool lockVarCheck(queryData&);
+		bool constErase(TABLE&, queryData&, size_t&, size_t&);
 		TABLE project(std::vector<queryData>&);
 		void rename(ROW&);
 		void resolveQuery(ROW&);
